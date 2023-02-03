@@ -5,9 +5,17 @@
  * @see {@link https://github.com/rodrigopivi/Chatito/blob/master/spec.md|specification}
  */
 
+/* eslint-disable arrow-parens */
+/* eslint-disable camelcase */
+/* eslint-disable-next-line spaced-comment */
+/// <reference types="tree-sitter-cli/dsl" />
+// @ts-check
+
 /**
- * @param {any} $
+ * @param {GrammarSymbols<'string'>} $
  * @param {string} quote
+ *
+ * @return {SeqRule}
  */
 const __string = ($, quote) => seq(
   quote,
@@ -15,11 +23,11 @@ const __string = ($, quote) => seq(
     'content',
     repeat(choice(
       new RegExp(`[^${quote}\\\n]`),
-      $.escape
-    ))
+      $.escape,
+    )),
   ),
-  quote
-)
+  quote,
+);
 
 module.exports = grammar({
   name: 'chatito',
@@ -33,13 +41,13 @@ module.exports = grammar({
       $._definition,
       $.import,
       $.comment,
-      prec(-2, $._eol)
+      prec(-2, $._eol),
     )),
 
     _definition: $ => choice(
       $.intent_def,
       $.slot_def,
-      $.alias_def
+      $.alias_def,
     ),
 
     intent_def: $ => seq(
@@ -49,7 +57,7 @@ module.exports = grammar({
       optional($._space),
       optional($.arguments),
       $._eol,
-      $.intent_body
+      $.intent_body,
     ),
 
     slot_def: $ => seq(
@@ -60,7 +68,7 @@ module.exports = grammar({
       optional($._space),
       optional($.arguments),
       $._eol,
-      $.slot_body
+      $.slot_body,
     ),
 
     alias_def: $ => seq(
@@ -70,7 +78,7 @@ module.exports = grammar({
       optional($._space),
       optional($.arguments),
       $._eol,
-      $.alias_body
+      $.alias_body,
     ),
 
     import: $ => seq(
@@ -78,7 +86,7 @@ module.exports = grammar({
       $._space,
       alias(/.+/, $.file),
       optional($._space),
-      $._eol
+      $._eol,
     ),
 
     comment: $ => seq(/(\/\/|#).*/, $._eol),
@@ -90,9 +98,9 @@ module.exports = grammar({
         prec(1, $.slot_ref),
         prec(1, $.alias_ref),
         $._space,
-        $.word
+        $.word,
       )),
-      $._eol
+      $._eol,
     )),
 
     slot_body: $ => repeat1(seq(
@@ -101,9 +109,9 @@ module.exports = grammar({
       repeat1(choice(
         prec(1, $.alias_ref),
         $._space,
-        $.word
+        $.word,
       )),
-      $._eol
+      $._eol,
     )),
 
     alias_body: $ => repeat1(seq(
@@ -112,9 +120,9 @@ module.exports = grammar({
         prec(1, $.slot_ref),
         prec(1, $.alias_ref),
         $._space,
-        $.word
+        $.word,
       )),
-      $._eol
+      $._eol,
     )),
 
     slot_ref: $ => seq(
@@ -135,11 +143,11 @@ module.exports = grammar({
     word: _ => token(prec(-1, /\S+/)),
 
     variation: _ => seq(
-      '#', field('id', /[^\]#?]+/)
+      '#', field('id', /[^\]#?]+/),
     ),
 
     probability: $ => seq(
-      '*[', $.number, optional('%'), ']'
+      '*[', $.number, optional('%'), ']',
     ),
 
     number: _ => /(0|[1-9][0-9]*)(\.[0-9]+)?/,
@@ -152,10 +160,10 @@ module.exports = grammar({
         optional($._space),
         ',',
         optional($._space),
-        $.argument
+        $.argument,
       )),
       optional($._space),
-      ')'
+      ')',
     ),
 
     argument: $ => seq(
@@ -163,23 +171,23 @@ module.exports = grammar({
       optional($._space),
       ':',
       optional($._space),
-      field('value', $.string)
+      field('value', $.string),
     ),
 
     string: $ => choice(
       __string($, '"'),
-      __string($, "'")
+      __string($, '\''),
     ),
 
     escape: _ => token(choice(
       /\\['"\\bfnrtv]/,
-      /\\u[0-9a-fA-F]{4}/
+      /\\u[0-9a-fA-F]{4}/,
     )),
 
     _eol: _ => /\r?\n/,
 
     _indent: _ => '    ',
 
-    _space: _ => token(prec(-1, /[ ]+/))
-  }
+    _space: _ => token(prec(-1, /[ ]+/)),
+  },
 });
