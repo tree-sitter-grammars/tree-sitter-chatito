@@ -12,13 +12,16 @@
   "keywords": [
     "tree-sitter",
     "parser",
-    "lexer"
+    "lexer",
+    "chatito"
   ],
   "scripts": {
+    "build": "tree-sitter generate && node-gyp build",
     "generate": "tree-sitter generate",
     "highlight": "tree-sitter highlight",
     "parse": "tree-sitter parse",
-    "test": "tree-sitter test"
+    "test": "tree-sitter test && script/parse-examples",
+    "test-windows": "tree-sitter test"
   },
   "main": "bindings/node",
   "dependencies": {
@@ -34,6 +37,9 @@
       "scope": "source.chatito",
       "file-types": [
         "chatito"
+      ],
+      "highlights": [
+        "queries/highlights.scm"
       ]
     }
   ]
