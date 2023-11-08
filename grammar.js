@@ -2,7 +2,6 @@
  * @file Tree-sitter grammar definition
  * @author ObserverOfTime
  * @license MIT
- * @see {@link https://github.com/rodrigopivi/Chatito/blob/master/spec.md|specification}
  */
 
 /**
