@@ -1,10 +1,10 @@
 [package]
 name = "tree-sitter-chatito"
 description = "chatito grammar for the tree-sitter parsing library"
-version = "0.1.2"
+version = "0.2.0"
 keywords = ["incremental", "parsing", "chatito"]
 categories = ["parsing", "text-editors"]
-repository = "https://github.com/ObserverOfTime/tree-sitter-chatito"
+repository = "https://github.com/tree-sitter-grammars/tree-sitter-chatito"
 edition = "2021"
 license = "MIT"
 
@@ -12,7 +12,6 @@ build = "bindings/rust/build.rs"
 include = [
   "bindings/rust/*",
   "grammar.js",
-  "queries/*",
   "src/*",
 ]
 
