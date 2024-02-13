@@ -1,0 +1,26 @@
+%[some intent]('training': '1')
+# ^^^^^^^^^^^ @module
+#              ^^^^^^^^^^ @attribute
+#                        ^ @punctuation.delimiter
+#                          ^^^ @string
+    @[some slot]
+#   ^^ @punctuation.bracket
+#     ^^^^^^^^^ @type
+#              ^ @punctuation.bracket
+
+@[some slot]
+# ^^^^^^^^^ @type
+    ~[some slot synonyms]
+#   ^^ @punctuation.bracket
+#     ^^^^^^^^^^^^^^^^^^ @embedded
+#                       ^ @punctuation.bracket
+
+~[some slot synonyms]('synonym': 'true')
+# ^^^^^^^^^^^^^^^^^^ @embedded
+#                     ^^^^^^^^^ @attribute
+#                              ^ @punctuation.delimiter
+#                                ^^^^^^ @string
+    synonym 1
+#   ^^^^^^^^^ @markup
+    synonym 2
+#   ^^^^^^^^^ @markup

@@ -1,0 +1,15 @@
+
+%[some intent]('training': '1')
+# ^^^^^^^^^^^ @definition.intent
+    @[some slot]
+#     ^^^^^^^^^ @reference.slot
+
+@[some slot]
+# ^^^^^^^^^ @definition.slot
+    ~[some slot synonyms]
+#     ^^^^^^^^^^^^^^^^^^ @reference.alias
+
+~[some slot synonyms]('synonym': 'true')
+# ^^^^^^^^^^^^^^^^^^ @definition.alias
+    synonym 1
+    synonym 2
