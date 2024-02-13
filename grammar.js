@@ -21,6 +21,15 @@ const __string = ($, quote) => seq(
   quote
 );
 
+/**
+ * @param {GrammarSymbols<'escape'>} $
+ * @param {Rule} main
+ * @returns RepeatRule
+ */
+const __body = ($, main) => prec.right(
+  repeat1(choice($.comment, main))
+);
+
 module.exports = grammar({
   name: 'chatito',
 
@@ -83,7 +92,7 @@ module.exports = grammar({
 
     comment: $ => seq(/(\/\/|#).*/, $._eol),
 
-    intent_body: $ => repeat1(seq(
+    intent_body: $ => __body($, seq(
       $._indent,
       optional($.probability),
       repeat1(choice(
@@ -95,7 +104,7 @@ module.exports = grammar({
       $._eol
     )),
 
-    slot_body: $ => repeat1(seq(
+    slot_body: $ => __body($, seq(
       $._indent,
       optional($.probability),
       repeat1(choice(
@@ -106,7 +115,7 @@ module.exports = grammar({
       $._eol
     )),
 
-    alias_body: $ => repeat1(seq(
+    alias_body: $ => __body($, seq(
       $._indent,
       repeat1(choice(
         $.slot_ref,

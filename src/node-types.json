@@ -30,6 +30,10 @@
           "named": true
         },
         {
+          "type": "comment",
+          "named": true
+        },
+        {
           "type": "slot_ref",
           "named": true
         },
@@ -152,6 +156,10 @@
           "named": true
         },
         {
+          "type": "comment",
+          "named": true
+        },
+        {
           "type": "probability",
           "named": true
         },
@@ -214,6 +222,10 @@
       "types": [
         {
           "type": "alias_ref",
+          "named": true
+        },
+        {
+          "type": "comment",
           "named": true
         },
         {
