@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-chatito",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
   "description": "Chatito grammar for tree-sitter",
   "repository": "tree-sitter-grammars/tree-sitter-chatito",
@@ -8,6 +8,10 @@
     "name": "ObserverOfTime",
     "email": "chronobserver@disroot.org",
     "url": "https://observeroftime.github.io/"
+  },
+  "funding": {
+    "url": "https://github.com/sponsors/ObserverOfTime",
+    "type": "github"
   },
   "keywords": [
     "tree-sitter",
