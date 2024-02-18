@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-chatito",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "license": "MIT",
   "description": "Chatito grammar for tree-sitter",
   "repository": "tree-sitter-grammars/tree-sitter-chatito",
@@ -43,6 +43,16 @@
       "path": "extensions/chatl",
       "file-types": [
         "chatl"
+      ],
+      "external-files": [
+        "../../grammar.js"
+      ]
+    },
+    {
+      "scope": "source.chatette",
+      "path": "extensions/chatette",
+      "file-types": [
+        "chatette"
       ],
       "external-files": [
         "../../grammar.js"

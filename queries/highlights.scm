@@ -38,7 +38,7 @@
 (escape) @string.escape
 
 ; Import
-"import" @keyword
+(import . _ @keyword)
 
 (file) @string.special
 

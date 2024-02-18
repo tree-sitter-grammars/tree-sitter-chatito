@@ -6,7 +6,7 @@ using namespace v8;
 
 extern "C" TSLanguage * tree_sitter_chatito();
 extern "C" TSLanguage * tree_sitter_chatl();
-// extern "C" TSLanguage * tree_sitter_chatette();
+extern "C" TSLanguage * tree_sitter_chatette();
 
 namespace {
 
@@ -29,17 +29,17 @@ void Init(Local<Object> exports, Local<Object> module) {
   Nan::SetInternalFieldPointer(chatl_instance, 0, tree_sitter_chatl());
   Nan::Set(chatl_instance, Nan::New("name").ToLocalChecked(), Nan::New("chatl").ToLocalChecked());
 
-  // Local<FunctionTemplate> chatette_tpl = Nan::New<FunctionTemplate>(New);
-  // chatette_tpl->SetClassName(Nan::New("Language").ToLocalChecked());
-  // chatette_tpl->InstanceTemplate()->SetInternalFieldCount(1);
-  // Local<Function> chatette_constructor = Nan::GetFunction(chatette_tpl).ToLocalChecked();
-  // Local<Object> chatette_instance = chatette_constructor->NewInstance(Nan::GetCurrentContext()).ToLocalChecked();
-  // Nan::SetInternalFieldPointer(chatette_instance, 0, tree_sitter_chatette());
-  // Nan::Set(chatette_instance, Nan::New("name").ToLocalChecked(), Nan::New("chatette").ToLocalChecked());
+  Local<FunctionTemplate> chatette_tpl = Nan::New<FunctionTemplate>(New);
+  chatette_tpl->SetClassName(Nan::New("Language").ToLocalChecked());
+  chatette_tpl->InstanceTemplate()->SetInternalFieldCount(1);
+  Local<Function> chatette_constructor = Nan::GetFunction(chatette_tpl).ToLocalChecked();
+  Local<Object> chatette_instance = chatette_constructor->NewInstance(Nan::GetCurrentContext()).ToLocalChecked();
+  Nan::SetInternalFieldPointer(chatette_instance, 0, tree_sitter_chatette());
+  Nan::Set(chatette_instance, Nan::New("name").ToLocalChecked(), Nan::New("chatette").ToLocalChecked());
 
   Nan::Set(exports, Nan::New("chatito").ToLocalChecked(), chatito_instance);
   Nan::Set(exports, Nan::New("chatl").ToLocalChecked(), chatl_instance);
-  // Nan::Set(exports, Nan::New("chatette").ToLocalChecked(), chatette_instance);
+  Nan::Set(exports, Nan::New("chatette").ToLocalChecked(), chatette_instance);
 }
 
 NODE_MODULE(tree_sitter_chatito_binding, Init)

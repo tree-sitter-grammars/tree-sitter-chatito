@@ -17,5 +17,5 @@ try {
 try {
   module.exports.chatito.nodeTypeInfo = require('../../chatito/src/node-types.json');
   module.exports.chatl.nodeTypeInfo = require('../../chatl/src/node-types.json');
-  // module.exports.chatette.nodeTypeInfo = require('../../chatette/src/node-types.json');
+  module.exports.chatette.nodeTypeInfo = require('../../chatette/src/node-types.json');
 } catch (_) { }

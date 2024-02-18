@@ -10,6 +10,6 @@ console.log('building chatl...');
 process.chdir(join(__dirname, 'extensions', 'chatl'));
 execSync('tree-sitter generate --no-bindings', {stdio: 'inherit'});
 
-// console.log('building chatette...');
-// process.chdir(join(__dirname, 'extensions', 'chatette'));
-// execSync('tree-sitter generate --no-bindings', {stdio: 'inherit'});
+console.log('building chatette...');
+process.chdir(join(__dirname, 'extensions', 'chatette'));
+execSync('tree-sitter generate --no-bindings', {stdio: 'inherit'});

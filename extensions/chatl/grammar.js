@@ -6,7 +6,7 @@
 
 /// <reference types="tree-sitter-cli/dsl"/>
 
-const CHATITO= require('../../grammar');
+const CHATITO = require('../../grammar');
 
 module.exports = grammar(CHATITO, {
   name: 'chatl',
