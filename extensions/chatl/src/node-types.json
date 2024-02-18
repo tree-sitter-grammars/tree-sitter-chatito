@@ -334,14 +334,10 @@
       },
       "quote": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
           {
-            "type": "\"",
-            "named": false
-          },
-          {
-            "type": "'",
+            "type": "`",
             "named": false
           }
         ]
@@ -359,10 +355,6 @@
     "fields": {}
   },
   {
-    "type": "\"",
-    "named": false
-  },
-  {
     "type": "#",
     "named": false
   },
@@ -372,10 +364,6 @@
   },
   {
     "type": "%[",
-    "named": false
-  },
-  {
-    "type": "'",
     "named": false
   },
   {
@@ -404,6 +392,10 @@
   },
   {
     "type": "]",
+    "named": false
+  },
+  {
+    "type": "`",
     "named": false
   },
   {

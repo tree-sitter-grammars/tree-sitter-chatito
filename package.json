@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-chatito",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "license": "MIT",
   "description": "Chatito grammar for tree-sitter",
   "repository": "tree-sitter-grammars/tree-sitter-chatito",
@@ -17,11 +17,11 @@
     "tree-sitter",
     "parser",
     "lexer",
-    "chatito"
+    "chatito",
+    "chatl"
   ],
   "scripts": {
-    "generate": "tree-sitter generate",
-    "parse": "tree-sitter parse",
+    "prepare": "node -e \"require('./build')\"",
     "test": "tree-sitter test"
   },
   "main": "bindings/node",
@@ -29,13 +29,23 @@
     "nan": "^2.18.0"
   },
   "devDependencies": {
-    "tree-sitter-cli": "~0.21.0-pre-release-1"
+    "tree-sitter-cli": "~0.20.8"
   },
   "tree-sitter": [
     {
       "scope": "source.chatito",
       "file-types": [
         "chatito"
+      ]
+    },
+    {
+      "scope": "source.chatl",
+      "path": "extensions/chatl",
+      "file-types": [
+        "chatl"
+      ],
+      "external-files": [
+        "../../grammar.js"
       ]
     }
   ]

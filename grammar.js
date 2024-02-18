@@ -4,27 +4,29 @@
  * @license MIT
  */
 
+/// <reference types="tree-sitter-cli/dsl"/>
+
 /**
  * @param {GrammarSymbols<'escape'>} $
  * @param {'"' | "'"} quote
  * @returns SeqRule
  */
 const __string = ($, quote) => seq(
-  quote,
+  field('quote', quote),
   field(
     'content',
     repeat(choice(
-      new RegExp(`[^${quote}\\\n]`),
+      new RegExp(`[^${quote}\\\r\n]`),
       $.escape
     ))
   ),
-  quote
+  field('quote', quote),
 );
 
 /**
- * @param {GrammarSymbols<'escape'>} $
+ * @param {GrammarSymbols<'comment'>} $
  * @param {Rule} main
- * @returns RepeatRule
+ * @returns PrecRightRule
  */
 const __body = ($, main) => prec.right(
   repeat1(choice($.comment, main))
@@ -170,10 +172,12 @@ module.exports = grammar({
     argument: $ => seq(
       field('key', $.string),
       optional($._space),
-      ':',
+      $.eq,
       optional($._space),
       field('value', $.string)
     ),
+
+    eq: _ => ':',
 
     string: $ => choice(
       __string($, '"'),

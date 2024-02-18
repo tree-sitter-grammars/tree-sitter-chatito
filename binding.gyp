@@ -9,6 +9,8 @@
       "sources": [
         "bindings/node/binding.cc",
         "src/parser.c",
+        "extensions/chatl/src/parser.c",
+        # "extensions/chatette/src/parser.c",
       ],
       "cflags_c": [
         "-std=c99",

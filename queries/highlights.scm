@@ -10,7 +10,7 @@
 ] @punctuation.bracket
 
 [
-  ":"
+  (eq)
   ","
 ] @punctuation.delimiter
 

@@ -1,0 +1,31 @@
+%[get_forecast]
+# ^^^^^^^^^^^^ @module
+  will it rain in @[city] on @[date]
+  ~[greet?] what's the weather like in @[city#variant]
+#                                      ^^ @punctuation.bracket
+#                                        ^^^^ @type
+#                                            ^ @punctuation.special
+#                                             ^^^^^^^ @variable.member
+#                                                    ^ @punctuation.bracket
+
+@[city]
+  paris
+# ^^^^^ @markup
+  rouen
+# ^^^^^ @markup
+
+@[city#variant]
+  new york
+  los angeles
+
+@[date](type=datetime)
+# ^^^^ @type
+#       ^^^^ @attribute
+#           ^ @punctuation.delimiter
+#            ^^^^^^^^ @string
+  tomorrow
+
+~[greet]
+# ^^^^^ @embedded
+  hi
+  hello
