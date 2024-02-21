@@ -1,15 +1,14 @@
-name: Test grammar
+name: CI
 
 on:
   push:
-    branches: ["*"]
+    branches: [master]
     paths:
       - grammar.js
       - src/**
       - bindings/**
       - binding.gyp
   pull_request:
-    branches: ["*"]
     paths:
       - grammar.js
       - src/**
@@ -18,4 +17,26 @@ on:
 
 jobs:
   test:
-    uses: tree-sitter-grammars/.github/.github/workflows/ci.yml@main
+    name: Test parsers
+    runs-on: ${{matrix.os}}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-14]
+    steps:
+      - name: Set up repository
+        uses: tree-sitter-grammars/actions/setup@main
+        with:
+          node-version: ${{vars.NODE_VERSION}}
+      - name: Clone examples
+        uses: actions/checkout@v4
+        with:
+          path: examples/Chatito
+          repository: rodrigopivi/Chatito
+          sparse-checkout: examples
+          ref: 25f95be775ad9729246422d99da0d8c7da43d3ba
+      - name: Run tests
+        uses: tree-sitter-grammars/actions/test@main
+        with:
+          test-library: ${{runner.os == 'Linux'}}
+          examples: examples/Chatito/examples/
