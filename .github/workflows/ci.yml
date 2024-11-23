@@ -6,39 +6,43 @@ on:
     paths:
       - grammar.js
       - src/**
+      - test/**
       - bindings/**
       - binding.gyp
-      - extensions/**
   pull_request:
     paths:
       - grammar.js
       - src/**
+      - test/**
       - bindings/**
       - binding.gyp
-      - extensions/**
+
+concurrency:
+  group: ${{github.workflow}}-${{github.ref}}
+  cancel-in-progress: true
 
 jobs:
   test:
-    name: Test parsers
+    name: Test parser
     runs-on: ${{matrix.os}}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-14]
     steps:
-      - name: Set up repository
-        uses: tree-sitter/parser-setup-action@v1.1
-        with:
-          node-version: ${{vars.NODE_VERSION}}
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Clone examples
         uses: actions/checkout@v4
         with:
           path: examples/Chatito
           repository: rodrigopivi/Chatito
           sparse-checkout: examples
-          ref: 25f95be775ad9729246422d99da0d8c7da43d3ba
+      - name: Set up tree-sitter
+        uses: tree-sitter/setup-action/cli@v2
       - name: Run tests
-        uses: tree-sitter/parser-test-action@v1.2
+        uses: tree-sitter/parser-test-action@v2
+      - name: Parse examples
+        uses: tree-sitter/parse-action@v4
         with:
-          test-library: ${{runner.os == 'Linux'}}
-          corpus-files: examples/Chatito/examples/
+          files: examples/Chatito/examples/

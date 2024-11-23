@@ -1,6 +1,6 @@
 [
   {
-    "type": "_definition",
+    "type": "definition",
     "named": true,
     "subtypes": [
       {
@@ -298,17 +298,18 @@
   {
     "type": "source",
     "named": true,
+    "root": true,
     "fields": {},
     "children": {
       "multiple": true,
       "required": false,
       "types": [
         {
-          "type": "_definition",
+          "type": "comment",
           "named": true
         },
         {
-          "type": "comment",
+          "type": "definition",
           "named": true
         },
         {
@@ -357,6 +358,10 @@
     "type": "word",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "    ",
+    "named": false
   },
   {
     "type": "\"",

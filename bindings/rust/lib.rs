@@ -1,6 +1,6 @@
 //! This crate provides chatito language support for the [tree-sitter][] parsing library.
 //!
-//! Typically, you will use the [language][language func] function to add this language to a
+//! Typically, you will use the [LANGUAGE][] constant to add this language to a
 //! tree-sitter [Parser][], and then use the parser to parse some code:
 //!
 //! ```
@@ -16,44 +16,33 @@
 //!     synonym 2
 //! "#;
 //! let mut parser = tree_sitter::Parser::new();
-//! parser.set_language(tree_sitter_chatito::language_chatito()).expect("Error loading chatito grammar");
+//! let language = tree_sitter_chatito::CHATITO_LANGUAGE;
+//! parser
+//!     .set_language(&language.into())
+//!     .expect("Error loading chatito parser");
 //! let tree = parser.parse(code, None).unwrap();
 //! assert!(!tree.root_node().has_error());
 //! ```
 //!
-//! [Language]: https://docs.rs/tree-sitter/*/tree_sitter/struct.Language.html
-//! [language func]: fn.language_chatito.html
 //! [Parser]: https://docs.rs/tree-sitter/*/tree_sitter/struct.Parser.html
 //! [tree-sitter]: https://tree-sitter.github.io/
 
-use tree_sitter::Language;
+use tree_sitter_language::LanguageFn;
 
 extern "C" {
-    fn tree_sitter_chatito() -> Language;
-    fn tree_sitter_chatl() -> Language;
-    // fn tree_sitter_chatette() -> Language;
+    fn tree_sitter_chatito() -> *const ();
+    fn tree_sitter_chatl() -> *const ();
 }
 
-/// Get the tree-sitter [Language][] for the chatito grammar.
+/// The tree-sitter [`LanguageFn`][LanguageFn] for the chatito grammar.
 ///
-/// [Language]: https://docs.rs/tree-sitter/*/tree_sitter/struct.Language.html
-pub fn language_chatito() -> Language {
-    unsafe { tree_sitter_chatito() }
-}
+/// [LanguageFn]: https://docs.rs/tree-sitter-language/*/tree_sitter_language/struct.LanguageFn.html
+pub const CHATITO_LANGUAGE: LanguageFn = unsafe { LanguageFn::from_raw(tree_sitter_chatito) };
 
-/// Get the tree-sitter [Language][] for the chatl grammar.
+/// The tree-sitter [`LanguageFn`][LanguageFn] for the chatl grammar.
 ///
-/// [Language]: https://docs.rs/tree-sitter/*/tree_sitter/struct.Language.html
-pub fn language_chatl() -> Language {
-    unsafe { tree_sitter_chatl() }
-}
-
-/// Get the tree-sitter [Language][] for the chatette grammar.
-///
-/// [Language]: https://docs.rs/tree-sitter/*/tree_sitter/struct.Language.html
-// pub fn language_chatette() -> Language {
-//     unsafe { tree_sitter_chatette() }
-// }
+/// [LanguageFn]: https://docs.rs/tree-sitter-language/*/tree_sitter_language/struct.LanguageFn.html
+pub const CHATL_LANGUAGE: LanguageFn = unsafe { LanguageFn::from_raw(tree_sitter_chatl) };
 
 /// The content of the [`node-types.json`][] file for the chatito grammar.
 ///
@@ -64,11 +53,6 @@ pub const CHATITO_NODE_TYPES: &str = include_str!("../../src/node-types.json");
 ///
 /// [`node-types.json`]: https://tree-sitter.github.io/tree-sitter/using-parsers#static-node-types
 pub const CHATL_NODE_TYPES: &str = include_str!("../../extensions/chatl/src/node-types.json");
-
-/// The content of the [`node-types.json`][] file for the chatette grammar.
-///
-/// [`node-types.json`]: https://tree-sitter.github.io/tree-sitter/using-parsers#static-node-types
-// pub const CHATETTE_NODE_TYPES: &str = include_str!("../../extensions/chatette/src/node-types.json");
 
 /// The syntax highlighting queries.
 pub const HIGHLIGHTS_QUERY: &str = include_str!("../../queries/highlights.scm");
@@ -82,23 +66,15 @@ mod tests {
     fn test_can_load_chatito_grammar() {
         let mut parser = tree_sitter::Parser::new();
         parser
-            .set_language(super::language_chatito())
-            .expect("Error loading chatito language");
+            .set_language(&super::CHATITO_LANGUAGE.into())
+            .expect("Error loading chatito parser");
     }
 
     #[test]
     fn test_can_load_chatl_grammar() {
         let mut parser = tree_sitter::Parser::new();
         parser
-            .set_language(super::language_chatl())
-            .expect("Error loading chatl language");
+            .set_language(&super::CHATL_LANGUAGE.into())
+            .expect("Error loading chatl parser");
     }
-
-    // #[test]
-    // fn test_can_load_chatette_grammar() {
-    //     let mut parser = tree_sitter::Parser::new();
-    //     parser
-    //         .set_language(super::language_chatette())
-    //         .expect("Error loading chatette language");
-    // }
 }

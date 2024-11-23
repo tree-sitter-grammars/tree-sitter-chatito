@@ -37,17 +37,17 @@ module.exports = grammar({
 
   extras: _ => [],
 
-  supertypes: $ => [$._definition],
+  supertypes: $ => [$.definition],
 
   rules: {
     source: $ => repeat(choice(
-      $._definition,
+      $.definition,
       $.import,
       $.comment,
       prec(-2, $._eol)
     )),
 
-    _definition: $ => choice(
+    definition: $ => choice(
       $.intent_def,
       $.slot_def,
       $.alias_def

@@ -1,47 +1,31 @@
-#include "nan.h"
-#include "tree_sitter/parser.h"
-#include <node.h>
+#include <napi.h>
 
-using namespace v8;
+typedef struct TSLanguage TSLanguage;
 
-extern "C" TSLanguage * tree_sitter_chatito();
-extern "C" TSLanguage * tree_sitter_chatl();
-// extern "C" TSLanguage * tree_sitter_chatette();
+extern "C" TSLanguage *tree_sitter_chatito();
+extern "C" TSLanguage *tree_sitter_chatl();
 
-namespace {
+// "tree-sitter", "language" hashed with BLAKE2
+const napi_type_tag LANGUAGE_TYPE_TAG = {
+    0x8AF2E5212AD58ABF, 0xD5006CAD83ABBA16
+};
 
-NAN_METHOD(New) {}
+Napi::Object Init(Napi::Env env, Napi::Object exports) {
+    auto chatito = Napi::Object::New(env);
+    chatito["name"] = Napi::String::New(env, "chatito");
+    auto chatito_language = Napi::External<TSLanguage>::New(env, tree_sitter_chatito());
+    chatito_language.TypeTag(&LANGUAGE_TYPE_TAG);
+    chatito["language"] = chatito_language;
 
-void Init(Local<Object> exports, Local<Object> module) {
-  Local<FunctionTemplate> chatito_tpl = Nan::New<FunctionTemplate>(New);
-  chatito_tpl->SetClassName(Nan::New("Language").ToLocalChecked());
-  chatito_tpl->InstanceTemplate()->SetInternalFieldCount(1);
-  Local<Function> chatito_constructor = Nan::GetFunction(chatito_tpl).ToLocalChecked();
-  Local<Object> chatito_instance = chatito_constructor->NewInstance(Nan::GetCurrentContext()).ToLocalChecked();
-  Nan::SetInternalFieldPointer(chatito_instance, 0, tree_sitter_chatito());
-  Nan::Set(chatito_instance, Nan::New("name").ToLocalChecked(), Nan::New("chatito").ToLocalChecked());
+    auto chatl = Napi::Object::New(env);
+    chatl["name"] = Napi::String::New(env, "chatl");
+    auto chatl_language = Napi::External<TSLanguage>::New(env, tree_sitter_chatl());
+    chatl_language.TypeTag(&LANGUAGE_TYPE_TAG);
+    chatl["language"] = chatl_language;
 
-  Local<FunctionTemplate> chatl_tpl = Nan::New<FunctionTemplate>(New);
-  chatl_tpl->SetClassName(Nan::New("Language").ToLocalChecked());
-  chatl_tpl->InstanceTemplate()->SetInternalFieldCount(1);
-  Local<Function> chatl_constructor = Nan::GetFunction(chatl_tpl).ToLocalChecked();
-  Local<Object> chatl_instance = chatl_constructor->NewInstance(Nan::GetCurrentContext()).ToLocalChecked();
-  Nan::SetInternalFieldPointer(chatl_instance, 0, tree_sitter_chatl());
-  Nan::Set(chatl_instance, Nan::New("name").ToLocalChecked(), Nan::New("chatl").ToLocalChecked());
-
-  // Local<FunctionTemplate> chatette_tpl = Nan::New<FunctionTemplate>(New);
-  // chatette_tpl->SetClassName(Nan::New("Language").ToLocalChecked());
-  // chatette_tpl->InstanceTemplate()->SetInternalFieldCount(1);
-  // Local<Function> chatette_constructor = Nan::GetFunction(chatette_tpl).ToLocalChecked();
-  // Local<Object> chatette_instance = chatette_constructor->NewInstance(Nan::GetCurrentContext()).ToLocalChecked();
-  // Nan::SetInternalFieldPointer(chatette_instance, 0, tree_sitter_chatette());
-  // Nan::Set(chatette_instance, Nan::New("name").ToLocalChecked(), Nan::New("chatette").ToLocalChecked());
-
-  Nan::Set(exports, Nan::New("chatito").ToLocalChecked(), chatito_instance);
-  Nan::Set(exports, Nan::New("chatl").ToLocalChecked(), chatl_instance);
-  // Nan::Set(exports, Nan::New("chatette").ToLocalChecked(), chatette_instance);
+    exports["chatito"] = chatito;
+    exports["chatl"] = chatl;
+    return exports;
 }
 
-NODE_MODULE(tree_sitter_chatito_binding, Init)
-
-}  // namespace
+NODE_API_MODULE(tree_sitter_chatito_binding, Init)

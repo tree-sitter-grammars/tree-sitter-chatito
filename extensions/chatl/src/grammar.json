@@ -1,5 +1,7 @@
 {
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "chatl",
+  "inherits": "chatito",
   "rules": {
     "source": {
       "type": "REPEAT",
@@ -8,7 +10,7 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "_definition"
+            "name": "definition"
           },
           {
             "type": "SYMBOL",
@@ -29,7 +31,7 @@
         ]
       }
     },
-    "_definition": {
+    "definition": {
       "type": "CHOICE",
       "members": [
         {
@@ -824,7 +826,6 @@
   "externals": [],
   "inline": [],
   "supertypes": [
-    "_definition"
+    "definition"
   ]
 }
-
