@@ -697,8 +697,12 @@
           ]
         },
         {
-          "type": "SYMBOL",
-          "name": "eq"
+          "type": "FIELD",
+          "name": "eq",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_eq"
+          }
         },
         {
           "type": "CHOICE",
@@ -722,7 +726,7 @@
         }
       ]
     },
-    "eq": {
+    "_eq": {
       "type": "STRING",
       "value": ":"
     },
@@ -853,7 +857,9 @@
   "conflicts": [],
   "precedences": [],
   "externals": [],
-  "inline": [],
+  "inline": [
+    "_eq"
+  ],
   "supertypes": [
     "definition"
   ],

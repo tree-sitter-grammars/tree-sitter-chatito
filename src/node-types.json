@@ -86,6 +86,16 @@
     "type": "argument",
     "named": true,
     "fields": {
+      "eq": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": ":",
+            "named": false
+          }
+        ]
+      },
       "key": {
         "multiple": false,
         "required": true,
@@ -106,16 +116,6 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "eq",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -400,6 +400,10 @@
     "named": false
   },
   {
+    "type": ":",
+    "named": false
+  },
+  {
     "type": "?",
     "named": false
   },
@@ -413,10 +417,6 @@
   },
   {
     "type": "alias",
-    "named": true
-  },
-  {
-    "type": "eq",
     "named": true
   },
   {

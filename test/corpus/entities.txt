@@ -33,11 +33,9 @@ Intent with arguments
     (arguments
       (argument
         key: (string)
-        (eq)
         value: (string))
       (argument
         key: (string)
-        (eq)
         value: (string)))
     (intent_body
       (word)
