@@ -10,7 +10,7 @@
 ] @punctuation.bracket
 
 [
-  (eq)
+  eq: _
   ","
 ] @punctuation.delimiter
 

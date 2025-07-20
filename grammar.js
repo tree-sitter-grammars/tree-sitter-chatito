@@ -39,6 +39,8 @@ module.exports = grammar({
 
   supertypes: $ => [$.definition],
 
+  inline: $ => [$._eq],
+
   rules: {
     source: $ => repeat(choice(
       $.definition,
@@ -172,12 +174,12 @@ module.exports = grammar({
     argument: $ => seq(
       field('key', $.string),
       optional($._space),
-      $.eq,
+      field('eq', $._eq),
       optional($._space),
       field('value', $.string)
     ),
 
-    eq: _ => ':',
+    _eq: _ => ':',
 
     string: $ => choice(
       __string($, '"'),

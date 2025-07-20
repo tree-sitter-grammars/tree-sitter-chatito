@@ -12,7 +12,7 @@ module.exports = grammar(CHATITO, {
   name: 'chatl',
 
   rules: {
-    eq: _ => '=',
+    _eq: _ => '=',
 
     string: $ => choice(
       field('content', repeat1(/\S/)),
