@@ -19,10 +19,11 @@ type NodeInfo =
     });
 
 type Language = {
+  name: string;
   language: unknown;
   nodeTypeInfo: NodeInfo[];
 };
 
 declare const chatito: Language;
 declare const chatl: Language;
-export = {chatito, chatl};
+export {chatito, chatl};

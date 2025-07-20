@@ -1,7 +1,7 @@
-//! This crate provides chatito language support for the [tree-sitter][] parsing library.
+//! This crate provides Chatito language support for the [tree-sitter] parsing library.
 //!
-//! Typically, you will use the [LANGUAGE][] constant to add this language to a
-//! tree-sitter [Parser][], and then use the parser to parse some code:
+//! Typically, you will use the [`LANGUAGE`] constant to add this language to a
+//! tree-sitter [`Parser`], and then use the parser to parse some code:
 //!
 //! ```
 //! let code = r#"
@@ -19,12 +19,12 @@
 //! let language = tree_sitter_chatito::CHATITO_LANGUAGE;
 //! parser
 //!     .set_language(&language.into())
-//!     .expect("Error loading chatito parser");
+//!     .expect("Error loading Chatito parser");
 //! let tree = parser.parse(code, None).unwrap();
 //! assert!(!tree.root_node().has_error());
 //! ```
 //!
-//! [Parser]: https://docs.rs/tree-sitter/*/tree_sitter/struct.Parser.html
+//! [`Parser`]: https://docs.rs/tree-sitter/0.25.8/tree_sitter/struct.Parser.html
 //! [tree-sitter]: https://tree-sitter.github.io/
 
 use tree_sitter_language::LanguageFn;
@@ -49,7 +49,7 @@ pub const CHATL_LANGUAGE: LanguageFn = unsafe { LanguageFn::from_raw(tree_sitter
 /// [`node-types.json`]: https://tree-sitter.github.io/tree-sitter/using-parsers#static-node-types
 pub const CHATITO_NODE_TYPES: &str = include_str!("../../src/node-types.json");
 
-/// The content of the [`node-types.json`][] file for the chatl grammar.
+/// The content of the [`node-types.json`] file for the chatl grammar.
 ///
 /// [`node-types.json`]: https://tree-sitter.github.io/tree-sitter/using-parsers#static-node-types
 pub const CHATL_NODE_TYPES: &str = include_str!("../../extensions/chatl/src/node-types.json");
@@ -67,7 +67,7 @@ mod tests {
         let mut parser = tree_sitter::Parser::new();
         parser
             .set_language(&super::CHATITO_LANGUAGE.into())
-            .expect("Error loading chatito parser");
+            .expect("Error loading Chatito parser");
     }
 
     #[test]
@@ -75,6 +75,6 @@ mod tests {
         let mut parser = tree_sitter::Parser::new();
         parser
             .set_language(&super::CHATL_LANGUAGE.into())
-            .expect("Error loading chatl parser");
+            .expect("Error loading Chatl parser");
     }
 }
