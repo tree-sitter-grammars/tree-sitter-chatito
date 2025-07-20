@@ -856,5 +856,6 @@
   "inline": [],
   "supertypes": [
     "definition"
-  ]
+  ],
+  "reserved": {}
 }
