@@ -5,6 +5,7 @@ fn main() {
 
     let mut config = cc::Build::new();
     config.std("c11").include(chatito_dir);
+
     #[cfg(target_env = "msvc")]
     config.flag("-utf-8");
 

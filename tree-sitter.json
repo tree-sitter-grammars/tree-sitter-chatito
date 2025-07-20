@@ -35,7 +35,8 @@
       }
     ],
     "links": {
-      "repository": "https://github.com/tree-sitter-grammars/tree-sitter-chatito"
+      "repository": "https://github.com/tree-sitter-grammars/tree-sitter-chatito",
+      "funding": "https://github.com/sponsors/ObserverOfTime"
     }
   }
 }

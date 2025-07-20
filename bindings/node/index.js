@@ -5,6 +5,6 @@ module.exports =
     : require("node-gyp-build")(require("path").join(__dirname, "..", ".."));
 
 try {
-  module.exports.chatito.nodeTypeInfo = require("../../chatito/src/node-types.json");
-  module.exports.chatl.nodeTypeInfo = require("../../chatl/src/node-types.json");
+  module.exports.chatito.nodeTypeInfo = require("../../src/node-types.json");
+  module.exports.chatl.nodeTypeInfo = require("../../extensions/chatl/src/node-types.json");
 } catch (_) { }

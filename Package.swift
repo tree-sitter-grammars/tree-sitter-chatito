@@ -1,6 +1,5 @@
 // swift-tools-version:5.3
 
-import Foundation
 import PackageDescription
 
 let package = Package(
@@ -9,7 +8,7 @@ let package = Package(
         .library(name: "TreeSitterChatito", targets: ["TreeSitterChatito", "TreeSitterChatl"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/ChimeHQ/SwiftTreeSitter", from: "0.8.0"),
+        .package(name: "SwiftTreeSitter", url: "https://github.com/tree-sitter/swift-tree-sitter", from: "0.9.0"),
     ],
     targets: [
         .target(
