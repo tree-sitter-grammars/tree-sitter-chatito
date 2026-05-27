@@ -1,0 +1,178 @@
+// chatito grammar for tree-sitter (native DSL).
+// Translated from grammar.js.
+
+// JS `__body($, main)` helper.
+macro body(main: rule_t) rule_t {
+    prec_right(0, repeat1(choice(comment, main)))
+}
+
+grammar {
+    language: "chatito",
+    extras: [],
+    supertypes: [definition],
+    inline: [_eq],
+}
+
+rule source {
+    repeat(choice(
+        definition,
+        import,
+        comment,
+        prec(-2, _eol),
+    ))
+}
+
+rule definition { choice(intent_def, slot_def, alias_def) }
+
+rule intent_def {
+    seq(
+        "%[",
+        alias(regexp(r"[^\]?]+"), intent),
+        "]",
+        optional(_space),
+        optional(arguments),
+        _eol,
+        intent_body,
+    )
+}
+
+rule slot_def {
+    seq(
+        "@[",
+        alias(regexp(r"[^\]#?]+"), slot),
+        optional(variation),
+        "]",
+        optional(_space),
+        optional(arguments),
+        _eol,
+        slot_body,
+    )
+}
+
+rule alias_def {
+    seq(
+        "~[",
+        alias(regexp(r"[^\]?]+"), alias),
+        "]",
+        optional(_space),
+        optional(arguments),
+        _eol,
+        alias_body,
+    )
+}
+
+rule import {
+    seq(
+        "import",
+        _space,
+        alias(regexp(r".+"), file),
+        optional(_space),
+        _eol,
+    )
+}
+
+rule comment { seq(regexp(r"(\/\/|#).*"), _eol) }
+
+rule intent_body {
+    body(seq(
+        _indent,
+        optional(probability),
+        repeat1(choice(slot_ref, alias_ref, _space, word)),
+        _eol,
+    ))
+}
+
+rule slot_body {
+    body(seq(
+        _indent,
+        optional(probability),
+        repeat1(choice(alias_ref, _space, word)),
+        _eol,
+    ))
+}
+
+rule alias_body {
+    body(seq(
+        _indent,
+        repeat1(choice(slot_ref, alias_ref, _space, word)),
+        _eol,
+    ))
+}
+
+rule slot_ref {
+    seq(
+        "@[",
+        alias(regexp(r"[^\]#?]+"), slot),
+        optional(variation),
+        optional("?"),
+        "]",
+    )
+}
+
+rule alias_ref {
+    seq(
+        "~[",
+        alias(regexp(r"[^\]?]+"), alias),
+        optional("?"),
+        "]",
+    )
+}
+
+rule word { prec_left(-1, repeat1(regexp(r"\S"))) }
+
+rule variation { seq("#", field(id, regexp(r"[^\]#?]+"))) }
+
+rule probability { seq("*[", number, optional("%"), "]") }
+
+rule number { regexp(r"(0|[1-9][0-9]*)(\.[0-9]+)?") }
+
+rule arguments {
+    seq(
+        "(",
+        optional(_space),
+        argument,
+        repeat(seq(optional(_space), ",", optional(_space), argument)),
+        optional(_space),
+        ")",
+    )
+}
+
+rule argument {
+    seq(
+        field(key, string),
+        optional(_space),
+        field(eq, _eq),
+        optional(_space),
+        field(value, string),
+    )
+}
+
+rule _eq { ":" }
+
+rule string {
+    choice(
+        seq(
+            field(quote, "\""),
+            field(content, repeat(choice(regexp(r#"[^"\r\n]"#), escape))),
+            field(quote, "\""),
+        ),
+        seq(
+            field(quote, "'"),
+            field(content, repeat(choice(regexp(r"[^'\r\n]"), escape))),
+            field(quote, "'"),
+        ),
+    )
+}
+
+rule escape {
+    token(choice(
+        regexp(r#"\\['"\\bfnrtv]"#),
+        regexp(r"\\u[0-9a-fA-F]{4}"),
+    ))
+}
+
+rule _eol { regexp(r"\r?\n") }
+
+rule _indent { "    " }
+
+rule _space { token(prec(-1, regexp(r"[ ]+"))) }
